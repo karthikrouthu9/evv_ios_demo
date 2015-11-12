@@ -9,6 +9,18 @@ $(document).ready(function(){
    
     function onDeviceReady() 
     {
+    	window.plugins.uniqueDeviceID.get(success, fail);		
+  		
+    function success(uuid)		
+{		
+    alert(uuid);		
+   		
+};		
+function fail(uuid)		
+{		
+   		
+    alert("failure function reg");		
+};
    document.addEventListener("backbutton", onBackKeyDown, false);
 		var element = document.getElementById('deviceProperties');
 		var device_uuid = device.uuid;
