@@ -18,23 +18,27 @@
  under the License.
 -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        id        = "io.cordova.helloCordova"
-        version   = "2.0.0">
+        id        = "web.application.attendancesystem"
+        version   = "2.0.0"
+        xmlns:gap = "http://phonegap.com/ns/1.0">
     <name>Evv_ios_demo</name>
 
     <description>
-       This is a Phonegap Application
+       This is a ios Phonegap Application
 	   </description>
 
-    <author href="http://cordova.io" email="dev@cordova.apache.org">
-        Apache Cordova Team
+    <author href="http://phonegap.io" email="dev@phonegap.apache.org">
+        Apache Phonegap Team
     </author>
 
     <access origin="*"/>
+  
 
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
-
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="stay-in-webview" value="true" />
+	<preference name="phonegap-version" value="3.0.0" />
     <preference name="loglevel" value="DEBUG" />
       <preference name="SplashScreen" value="splash" />
       <preference name="backgroundColor" value="0xFFF" />
@@ -43,8 +47,10 @@
       <preference name="disallowOverscroll" value="true" />
    	  <preference name="SplashScreen" value="screen" />
       <preference name="SplashScreenDelay" value="10000" />
+      <preference name="ios-orientation-iphone" value="portrait" />
+<preference name="ios-orientation-ipad" value="portrait and landscape" /> 
       <platform name="android">
-	  <gap:platform name="ios" />
+      	<gap:platform name="ios" />
       	<gap:platform name="android" />
       	<gap:platform name="winphone" />
     <splash src="res/screen/android/homecare_logo.png" density="port-hdpi"/>
@@ -52,7 +58,7 @@
     <splash src="res/screen/android/homecare_logo.png" density="port-mdpi"/>
     <splash src="res/screen/android/homecare_logo.png" density="port-xhdpi"/>
   </platform>
-   <gap:plugin name="org.apache.cordova.core.camera" />
+  <gap:plugin name="org.apache.cordova.core.camera" />
   <gap:plugin name="cordova.plugins.diagnostic" source="plugins.cordova.io" />
 <gap:plugin name="org.apache.cordova.core.geolocation" />
 <gap:plugin name="org.apache.cordova.core.dialogs" />
@@ -62,75 +68,20 @@
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="org.apache.cordova.dialogs" />
 <gap:plugin name="org.apache.cordova.splashscreen" />
-    <feature name="App">
-      <param name="android-package" value="org.apache.cordova.App"/>
-    </feature>
-    <feature name="Geolocation">
-      <param name="android-package" value="org.apache.cordova.GeoBroker"/>
-    </feature>
-    <feature name="Device">
-      <param name="android-package" value="org.apache.cordova.Device"/>
-    </feature>
-    <feature name="Accelerometer">
-      <param name="android-package" value="org.apache.cordova.AccelListener"/>
-    </feature>
-    <feature name="Compass">
-      <param name="android-package" value="org.apache.cordova.CompassListener"/>
-    </feature>
-    <feature name="Media">
-      <param name="android-package" value="org.apache.cordova.AudioHandler"/>
-    </feature>
-    <feature name="Camera">
-      <param name="android-package" value="org.apache.cordova.CameraLauncher"/>
-    </feature>
-    <feature name="Contacts">
-      <param name="android-package" value="org.apache.cordova.ContactManager"/>
-    </feature>
-    <feature name="File">
-      <param name="android-package" value="org.apache.cordova.FileUtils"/>
-    </feature>
-    <feature name="NetworkStatus">
-      <param name="android-package" value="org.apache.cordova.NetworkManager"/>
-      
-      
-    </feature>
-    <feature name="Notification">
-      <param name="android-package" value="org.apache.cordova.Notification"/>
-    </feature>
-    <feature name="Storage">
-      <param name="android-package" value="org.apache.cordova.Storage"/>
-    </feature>
-    <feature name="SQLitePlugin">
- 	<param name="android-package" value="org.pgsqlite.SQLitePlugin"/>
- 	</feature>
-    <feature name="FileTransfer">
-      <param name="android-package" value="org.apache.cordova.FileTransfer"/>
-    </feature>
-    <feature name="Capture">
-      <param name="android-package" value="org.apache.cordova.Capture"/>
-    </feature>
-    <feature name="Battery">
-      <param name="android-package" value="org.apache.cordova.BatteryListener"/>
-    </feature>
-    <feature name="SplashScreen">
-      <param name="android-package" value="org.apache.cordova.SplashScreen"/>
-    </feature>
-    <feature name="Echo">
-      <param name="android-package" value="org.apache.cordova.Echo"/>
-    </feature>
-    <feature name="Globalization">
-      <param name="android-package" value="org.apache.cordova.Globalization"/>
-    </feature>
-    <feature name="InAppBrowser">
-      <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
-    </feature>
-    <feature name="Device">
-    <param name="android-package" value="org.apache.cordova.device.Device" />
-</feature>
+<gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" source="plugins.cordova.io" />
+
+
+
+	<feature name="http://api.phonegap.com/1.0/device"/>
+    	<feature name="http://api.phonegap.com/1.0/battery"/>
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/>
+
     <!-- Deprecated plugins element. Remove in 3.0 -->
-    <plugins>
-        <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
-        <plugin name="Storage" value="org.apache.cordova.Storage"/>
-        <plugin name="Device" value="org.apache.cordova.Device"/>
-       </plugins>
+   
 </widget>
