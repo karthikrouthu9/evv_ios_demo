@@ -1,0 +1,33 @@
+@media (max-width: 400px) {
+    span#test { font-size: 80%; }
+    div#test { font-size: 70%; }
+}
+
+
+
+
+
+
+
+
+
+/* 1st level */
+.nav label {
+	color: blue;
+}
+
+/* 2nd level */
+.tree > li > label {
+  padding:10px 15px;  
+}
+body {
+	background-image: url("ats_background.jpg");
+   	background-size:100% 180%;
+    overflow-y: hidden;
+    height: 100%;
+     }
+h3
+{
+color:black;
+}
+

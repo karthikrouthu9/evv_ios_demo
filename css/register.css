@@ -1,0 +1,53 @@
+
+html {
+	 height: 100%;
+    
+     }
+
+body {
+	 background-image: url("ats_background.jpg");
+   	 height: 100%;
+     background-size:100% 180%;
+     }
+
+
+.registration-form {
+	        margin-top: 60px;
+			}
+
+
+input[type=tel] {
+    			-webkit-text-security: disc;
+				}
+
+form[role=registration] {
+				color: #5d5d5d;
+				background: #f2f2f2;
+				padding: 26px;
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+				 }
+	
+form[role=registration] img {
+					display: block;
+					margin: 0 auto;
+					 }
+	
+form[role=registration] input,
+form[role=registration] button {
+						font-size: 16px;
+						margin: 10px 0;
+						}
+
+form[role=registration] > div {
+						text-align: center;
+						}
+	
+.form-links {
+			text-align: center;
+			margin-top: 1em;
+			margin-bottom: 50px;
+			}
+.form-links a {
+				color: #fff;
+			  }

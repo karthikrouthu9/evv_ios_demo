@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+		  	<title>Electronic Visit Verification Security Questions Screen</title>
+			
+			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			
+    		<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     <script src="plugins/jquery-1.11.2.min.js"></script>
+    		
+    		<script type="text/javascript" src="cordova.js"></script>
+    		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+         	<script src="plugins/bootbox.js"></script>
+        	<script src="plugins/bootbox.min.js"></script>
+        	<script src="js/security_questions.js"></script>
+        	<script src="js/global.js"></script>
+    	
+</head>
+
+<body>
+<div class="container">
+<div class="row">
+   
+      <div class="col-md-offset-3 col-sm-6 col-sm-offset-3">
+      <section class="global-form">
+        <span id="bootstrap"></span>
+         <div id="pageLoader" style="position: relative; top: 175px;">
+ <div>
+       <center><img src="images/loading.gif" class="img-responsive img-center" alt="gif icon" style="height:45PX;" /> </center>
+    </div>
+    </div>
+      
+        <form name='frm' method="post"  id="formoid"  role="global">
+          <img src="images/homecare_logo.png" class="img-responsive" alt="logo" style="HEIGHT:62PX;"/>
+          
+           <h3><p class="text-center" style="color:#000000">Device Security Questions</p></h3>
+          
+           Select a security question and provide answer. These details are required to recover your log-in PIN in future.
+              <p>
+              </p>
+              
+              	  
+				                   <select class="form-control" id="security_question" style="margin-bottom: -1px;">
+</select>
+                <input type="password" name="securityanswer"  placeholder="Enter Security Answer" class="form-control input-lg" id="security_answer" style=" height: 31px;"/>
+                <input type="hidden" id="device_uuid"/>   
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block" id="submit_button">Submit</button>
+          
+         
+          
+        </form>
+        
+        <div class="form-links" id="link_id">
+         <p class="text-center"><a onclick="navigator.app.loadUrl('http://www.ondemandhomecare.com/', { openExternal:true });" style="color: #FFFFFF ">www.ondemandhomecare.com</a></p>
+
+        </div>
+      </section>  
+      </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+	
+	<title>Electronic Visit Verification Check-Out Screen</title>
+	<script type="text/javascript" src="plugins/maps.google.com.maps.api.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script> 
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="plugins/jquery-1.11.2.min.js"></script>
+	<script src="plugins/jquery-1.11.2.js"></script>
+	<script src="js/check_out.js"></script>
+	<link href="check-in.css" rel="stylesheet">
+	<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+	<script src="js/global.js"></script>
+    <link href="custom.css" rel="stylesheet">
+	<script src="plugins/bootbox.js"></script>
+    <script src="plugins/bootbox.min.js"></script>
+ 
+		
+
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<a href="check-in_summary.html" onclick="window.history.go(-1); return false;"><img src="images/backbutton.png" alt style="height: 50px;float: left;""></a>
+     
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                    
+                </a>
+                
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                     <li>
+					<a href="regenerate_pin.html">Create New PIN</a>
+                      
+                    </li>
+                    <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+					<li>
+                     <a href="#" onclick="logout();">Logout</a>
+                    </li>
+                     
+                     
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+   
+
+</head>
+
+
+
+<body>
+
+    
+	<div id="map-canvas"></div>
+	<div id="pageLoader" style="position: relative; top: 175px;">
+ <div>
+       <center><img src="images/loading.gif" class="img-responsive img-center" alt="gif icon" style="height:45PX;" /> </center>
+    </div>
+    </div>
+	<div id="form_id">
+	 <form name='frm' method="post"  id="check_out_form"  role="login">
+
+       
+<div style="border: none;" class="col-md-12 col-xs-12 col-sm-12"> 
+<p class="dotted">
+<span class="glyphicon glyphicon-user" class="col-md-12 col-xs-12 col-sm-12" style="border: none;"></span>
+<span style=" background-color: none" id="exampleInputpatientname1"> </span>
+     </p>
+      </div>
+      
+      
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<p class="dotted">
+ <span class="glyphicon glyphicon-bed"  style="border: none;"></span>
+ <span style=" background-color: none"  id="exampleInputvisittype1"> </span>
+ </div>
+ </p>
+
+
+
+
+
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<p class="dotted">
+  <span class="glyphicon glyphicon-time"  style="border: none;"></span>Scheduled Time:
+ <span style=" background-color: none"  id="exampleInputscheduledtime1"> </span>
+      </div>
+</p>
+      
+      
+	<input type="hidden" class="form-control" id="exampleInputpatientname1" value="" disabled/>
+	<input type="hidden" class="form-control" id="latitude" value="" disabled />
+	<input type="hidden" class="form-control" id="longitude" value="" disabled />
+	<input type="hidden" class="form-control" id="exampleInputvisittype1" value="" disabled />
+	<input type="hidden" size="450px" class="form-control" id="exampleInputscheduledtime1" value="" disabled />
+
+
+
+
+
+
+
+<div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+<div class="input-group" id="timer">Check-In Time:
+<span id="checked_in_time_temp"></span>
+<span id='checked_in_time_temp_hid' hidden='true'></span>
+</div>
+</div>
+
+
+
+
+
+
+
+<span class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+<div id="timer">Current Time: <span id="time1"></span></div>
+</span>
+
+
+
+
+
+<div class="col-md-6 col-xs-12 col-sm-6 ">
+<div class="input-group">Duration:
+<span id="duration_time_temp"></span>
+</div>
+</div>
+
+
+
+
+</span>
+
+
+<div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+	
+	<input type="tel"  size="450px"  step="any" maxlength="7"  pattern="(0\.((0[0-9]{1})|([0-9]{1}([0-9]{1})?)))|(([0-9]+[0-9]*)(\.([0-9]{1,2}))?)" class="form-control" id="exampleInputexpenses1" placeholder="Expenses($)"/>
+
+</div>
+
+
+<div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+	
+	<input type="tel"  size="450px" step="any" maxlength="5" pattern="(0\.((0[0-9]{1})|([0-9]{1}([0-9]{1})?)))|(([0-9]+[0-9]*)(\.([0-9]{1,2}))?)" class="form-control" id="exampleInputmileage1" placeholder="Mileage"/>
+
+</div>
+
+</span>
+
+<h5><span id="style_css" class="col-sm-12 col-xs-12 col-md-12" style="padding: 12px;">
+Patient Signature</span></h5>
+<div id="page" data-role="content"><center>
+<div class="col-sm-12 col-xs-12 col-md-9" style="
+    margin-top: -24px;
+">
+
+
+<div id="div_signcontract">
+<span class="col-sm-12 col-xs-12 col-md-12" style="top: 19px; margin-left: -1px;">		
+<button type="button" class="btn btn-primary btn-xs" id="clear_button" onclick="init_Sign_Canvas()" style="margin-left: 264px;">Clear</button>
+			</span>
+					<canvas id="canvas" width="674" height="200" style="width: 299px; height: 125px; border: 1px solid rgb(0, 0, 0);">Canvas is not supported</canvas>
+				</div>
+			</div></center>
+		
+</div>
+
+
+		
+<br>
+
+<div id="page" data-role="content">
+<div class="col-sm-12 col-xs-12 col-md-12" id="button_id">
+ <button type="submit" name="go" id="check_out" class="btn btn-lg btn-primary btn-block">Check-Out</button>
+</div>
+	</form>
+</div>
+        </section>  
+      </div>
+     
+
+</body>
+</html>        

@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+
+	<title>Electronic Visit Verification Check-In Screen</title>
+	
+	<script type="text/javascript" src="plugins/maps.google.com.maps.api.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script> 
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="plugins/jquery-1.11.2.min.js"></script>
+	<script src="plugins/jquery-1.11.2.js"></script>
+	<script src="js/check_in.js"></script>
+	<link href="check-in.css" rel="stylesheet">
+	<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+	<script src="plugins/bootstrap-switch.js"></script>
+	<link href="plugins/bootstrap-switch.css" rel="stylesheet">
+	<script src="js/global.js"></script>
+	<link href="custom.css" rel="stylesheet">
+	<script src="plugins/bootbox.js"></script>
+    <script src="plugins/bootbox.min.js"></script>
+   
+
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<a href="patient_selection.html" onclick="window.history.go(-1); return false;"><img src="images/backbutton.png" alt style="height: 50px;float: left;""></a>
+    <div class="container">
+         
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                     <li>
+					<a href="regenerate_pin.html">Create New PIN</a>
+                      
+                    </li>
+                    <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+					<li>
+                	
+                	<a href="#" onclick="logout();">Logout</a>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    
+</head>
+
+<body>
+
+		<div id="map-canvas"></div>
+		<div id="pageLoader" style="position: relative; top: 175px;">
+ <div>
+       <center><img src="images/loading.gif" class="img-responsive img-center" alt="gif icon" style="height:45PX;" /> </center>
+    </div>
+    </div>
+    
+	<div id="form_id">
+ <form name='frm' method="post"  id="check_in_form"  role="global">
+       
+<div style="border: none;" class="col-md-12 col-xs-12 col-sm-12"> 
+<p class="dotted">
+<span class="glyphicon glyphicon-user" class="col-md-12 col-xs-12 col-sm-12" style="border: none;"></span>
+<span style=" background-color: none" id="exampleInputpatientname1"> </span>
+     </p>
+      </div>
+      
+      
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<p class="dotted">
+ <span class="glyphicon glyphicon-bed"  style="border: none;"></span>
+ <span style=" background-color: none"  id="exampleInputvisittype1"></span>
+ </div>
+ </p>
+
+
+
+
+
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<p class="dotted">
+  <span class="glyphicon glyphicon-time"  style="border: none;"></span>Scheduled Time:
+ <span style=" background-color: none"  id="exampleInputscheduledtime1"></span>
+      </div>
+</p>
+      
+      
+      
+      
+
+
+
+	<input type="hidden"  id="exampleInputpatientname1" value="" />
+	<input type="hidden"  id="latitude" value="" />
+	<input type="hidden"  id="longitude" value="" />
+	<input type="hidden"  id="exampleInputvisittype1" value="" />
+	<input type="hidden"  id="exampleInputscheduledtime1" value=""/>
+
+<span class="col-md-12 col-xs-12 col-sm-12 ">
+<div id="timer">Current Time: <span id="time"></span></div>
+</span>
+
+<span class="col-md-6 col-xs-12 col-sm-6 ">
+<span class=" control-label" for="IsSmallBusiness" id="patient_available" >Is Patient Available ?</span>
+<input type="checkbox" name="my-checkbox" data-on-text="YES" data-off-text="NO" checked checked data-size="small">
+</span>
+
+<script>
+
+
+ $("[name='my-checkbox']").bootstrapSwitch();
+
+$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  if(!state)
+  {
+  
+$('#patient_availability').removeClass('hide').show();
+$('#gobtn').html("Check-In/Out");
+  }
+  else{
+  
+$('#patient_availability').addClass('hide').hide();
+$('#gobtn').html("Check-In");
+  }
+});
+
+</script>
+
+<span id="patient_availability" class="hide">
+
+<div class="col-sm-12 col-xs-12 col-md-12">
+<br>
+<select class="form-control" id="reason_codes">
+    <option value=1>No answer, at Door</option>
+    <option value=2>Patient/Caregiver refused</option>
+    <option value=3>Doctor Notified</option>
+    <option value=4>Patient Hospitalized</option>
+    <option value=5>Doctor Visit</option>
+    <option value=6>Other</option>
+</select>
+</div>
+
+<div class="col-sm-6 col-xs-6 col-md-6 ">
+	<label for="exampleInputexpenses1"></label>
+	<input type="tel"  size="450px"  step="any" maxlength="7" pattern="(0\.((0[0-9]{1})|([0-9]{1}([0-9]{1})?)))|(([0-9]+[0-9]*)(\.([0-9]{1,2}))?)"   class="form-control" id="expenses1" placeholder="Expenses($)"/>
+
+</div>
+
+
+<div class="col-sm-6 col-xs-6 col-md-6 ">
+	<label for="exampleInputmiledge1"></label>
+	<input type="tel"  size="450px" step="any" maxlength="5"  pattern="(0\.((0[0-9]{1})|([0-9]{1}([0-9]{1})?)))|(([0-9]+[0-9]*)(\.([0-9]{1,2}))?)" class="form-control" id="mileage1" placeholder="Mileage"/>
+
+</div>
+
+
+<div class="form-group">
+<center><div class="col-sm-12 col-xs-12 col-md-6 ">
+	<label for="exampleInputmiledge1"></label>
+	<input type="tel" size="450px" pattern="\d*" maxlength="3" class="form-control" id="exampleInputminutesspent" placeholder="No.of minutes spent at Patient's home"/>
+</div></center>
+</div>
+</span>
+<br>
+<br>
+<span id="style_css" class="col-sm-12 col-xs-12 col-md-12 ">Employee Signature</span>
+				
+<center>
+<div class="col-sm-12 col-xs-12 col-md-9 ">
+
+<div id="div_signcontract">
+<span class="col-sm-12 col-xs-12 col-md-12" style="top: 19px; margin-left: -1px; margin-top: -12px;">		
+<button type="button" class="btn btn-primary btn-xs" id="clear_button" onclick="init_Sign_Canvas()" style="margin-left: 264px;">Clear</button>
+			</span>
+					<canvas id="canvas">Canvas is not supported</canvas>
+				</div>
+				
+			</center>
+</div>
+<br>
+<div id="page" data-role="content">
+<div class="col-sm-12 col-xs-12 col-md-12" id="button_id">
+<button type="submit" name="go" class="btn btn-lg btn-primary btn-block" id="check_in_time">Check-In</button>
+</div>
+</form>
+</div>
+</div>
+        </section>  
+      
+    
+</body>
+</html>

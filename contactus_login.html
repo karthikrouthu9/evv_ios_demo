@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	
+	<title>Electronic Visit Verification Contact Us Page</title>
+		
+
+				<script src="plugins/jquery-1.11.2.min.js"></script>
+    			<script src="plugins/jquery-1.11.2.js"></script>
+    			<link rel='stylesheet' href='style.css' type='text/css'/> 
+				<script type="text/javascript" src="cordova.js"></script>
+  				<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+				<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     			<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+     			<script src="js/global.js"></script>
+    			<script src="plugins/bootbox.js"></script>
+        		<script src="plugins/bootbox.min.js"></script>
+  				
+<script>
+    		
+    
+    
+      document.addEventListener("deviceready", onDeviceReady, false);
+		
+		function onDeviceReady() {
+		document.addEventListener("backbutton", onBackKeyDown, false);
+   		var device_uuid = device.uuid;
+
+   
+   var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE)
+    {
+      window.location='./first_screen.html';
+               return false;
+    
+    }
+   else
+   {
+   		
+   } 
+
+  }
+ 
+function onBackKeyDown(e) {
+			 
+				navigator.app.backHistory();
+			 
+			}
+        </script>
+</head>
+
+<body onload="onDeviceReady()">
+  <div class="container">
+  
+ <div class="col-md-offset-3 col-sm-6 col-sm-offset-3">
+  <div class="row">
+  <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+     	<a href="log-in.html" onclick="window.history.go(-1); return false;"><img src="images/backbutton.png" alt style="height: 50px;float: left;""></a>
+    
+        <div class="container">
+         
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                </a>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                    <li>
+					<a href="regenerate_pin.html">Create New PIN</a>
+                      
+                    </li>
+                     <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+					<li>
+					<a href="#" onclick="logout();">Logout</a>
+                      
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <section class="global-form">
+       
+           
+     <div class="row">
+    
+       <div class="col-sm-12 col-xs-12 col-lg-12">
+     
+  
+          <div class="well">
+           <h3><p class="text-center" style="color:#000000">Contact Us</p></h3>
+        
+
+<b>Corporate Office</b>
+<p></p>
+<p>
+On-Demand Homecare
+<br>
+3530 Forest Lane, Suite 314,
+<br>
+Dallas, TX 75234.
+<br>
+Phone: (972) 484-4574
+<br>
+Fax: (972) 692 8057
+<br>
+support@ondemandhomecare.com
+<br>
+sales@ondemandhomecare.com
+
+</p>
+<p></p>
+<b>Office Hours</b>
+<p></p>
+Monday-Friday
+8AM - 5PM Central Standard Time
+</div> 
+</section>
+</div>
+<p class="text-center"><a onclick="navigator.app.loadUrl('http://www.ondemandhomecare.com/', { openExternal:true });" style="color: #FFFFFF ">www.ondemandhomecare.com</a></p>
+
+
+</div>
+</body>
+</html>

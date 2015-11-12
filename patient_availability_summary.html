@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+		  	<title>Electronic Visit Verification Patient Availability Status Screen</title>
+			<script src="plugins/jquery-1.11.2.min.js"></script>
+    		<script src="plugins/jquery-1.11.2.js"></script>
+			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			<link href="check-in.css" rel="stylesheet">
+    		<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    		<script type="text/javascript" src="cordova.js"></script>
+    		<script src="js/global.js"></script>
+    		<script src="plugins/bootbox.js"></script>
+    		<script src="plugins/bootbox.min.js"></script>
+    			
+    		<script>
+    		
+    $(document).ready(function(){
+     $('body').attr('id', 'body_test');
+				$("#pageLoader").show(); 
+    			$("#form_id").hide(); 
+				$("#link_id").hide(); 
+    document.addEventListener("deviceready",onDeviceReady,false);       
+});
+    
+    
+
+    function onDeviceReady() {
+   	var element = document.getElementById('deviceProperties');
+	
+       var device_uuid = device.uuid;
+       //is_device_registered(device_uuid);
+	 var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE)
+    {
+      window.location='./first_screen.html';
+               return false;
+    }
+     else
+    {
+    	
+		
+		
+		var sch_uuid = getURLParameters('sch_uuid');
+		 $.ajax({
+          url:"http://183.82.96.212:8080/services/session/token",
+          type:"get",
+          dataType:"text",
+           timeout:20000,
+           crossDomain: true,
+          error:function (jqXHR, textStatus, errorThrown) {
+			if(textStatus==="timeout") {
+					  bootbox.dialog({
+					  closeButton: false,
+	        			  message: "Problem connecting with server. Please try after sometime.",
+	        			  title: "Alert",
+	        			  buttons: {
+	        			    success: {
+	        			      label: "OK",
+	        			      className: "btn-danger",
+	        			      callback: function() {
+	        			    	  
+	        			    	  exit_app();
+	        			      }
+	        			    
+	        			    }
+	        			    
+	        			    
+	        			  }
+	        			});
+						
+						}
+          },
+          success: function (token) {   
+   	var device_uuid = device.uuid;
+	var d = document.getElementById("device_uuid");
+	var token =token;
+	var header = "X-CSRF-TOKEN";
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+	
+            $.ajax({
+              url: 'http://183.82.96.212:8080/m_service/m_resources/get_check_in_summary_details',
+              type: "POST",
+	  		  //data: 'device_uuid='+'8dc6cf319947e729',
+      		  data: {sch_uuid:sch_uuid},
+              dataType: "json",
+               timeout:20000,
+              crossDomain: true,
+              
+			  error: function (jqXHR, textStatus, errorThrown) {
+			
+	
+bootbox.dialog({
+closeButton: false,
+		  message: "Problem connecting with server. Please try after sometime.",
+		  title: "Alert",
+		  buttons: {
+		    success: {
+		      label: "OK",
+		      className: "btn-danger",
+		      callback: function() {
+		  
+		     
+		    
+		      }
+		    
+		    }
+		    
+		    
+		  }
+		});
+	
+              },
+              success: function (data) {
+		$("#pageLoader").hide(); 
+		$('body').attr('id', '');
+            	  $("#form_id").show(); 
+            	   $("#link_id").show(); 
+ patient_name=data.checkin_data[0].patient_name;
+ visit_type=data.checkin_data[0].visit_type;
+ scheduled_time=data.checkin_data[0].sch_start_timestamp+' - '+data.checkin_data[0].sch_end_timestamp;
+ checked_in_time=data.checkin_data[0].checked_in_time;
+ reason_codes=data.checkin_data[0].reasons;
+
+ reason_codes=getResponseCodeMessage(reason_codes);
+ 
+ 
+ 
+ $("#exampleInputpatientname1").html(patient_name);
+ $("#exampleInputvisittype1").html(visit_type);
+ $("#exampleInputscheduledtime1").html(scheduled_time);
+ $("#checked_in_time").html(checked_in_time);
+ $("#reason_codes").html(reason_codes);
+ var json = data;
+ 
+ var patient_name = json.checkin_data[0].patient_name;
+ var visit_type = json.checkin_data[0].visit_type;
+ var scheduled_time = json.checkin_data[0].sch_start_timestamp+' - '+json.patientdata[0].sch_end_timestamp;
+
+  //$("#checked_in_time").val(json.checkin_data[0].checked_in_time);
+	
+}
+			
+			});
+			}
+			});
+			}
+			}
+		window.onload = function(){date()}, setInterval(function(){date()}, 1000);
+
+function date() {
+    var now = new Date(),
+        now = now.getHours()+':'+now.getMinutes();
+    $('#time').html(now);
+     $('#time1').html(now);
+}
+
+			function getURLParameters(paramName)
+{
+    var sURL = window.document.URL.toString();
+    if (sURL.indexOf("?") > 0)
+    {
+        var arrParams = sURL.split("?");
+        var arrURLParams = arrParams[1].split("&");
+        var arrParamNames = new Array(arrURLParams.length);
+        var arrParamValues = new Array(arrURLParams.length);
+
+        var i = 0;
+        for (i = 0; i<arrURLParams.length; i++)
+        {
+            var sParam =  arrURLParams[i].split("=");
+            arrParamNames[i] = sParam[0];
+            if (sParam[1] != "")
+                arrParamValues[i] = unescape(sParam[1]);
+            else
+                arrParamValues[i] = "No Value";
+        }
+
+        for (i=0; i<arrURLParams.length; i++)
+        {
+            if (arrParamNames[i] == paramName)
+            {
+                //alert("Parameter:" + arrParamValues[i]);
+                return arrParamValues[i];
+            }
+        }
+        return "No Parameters Found";
+    }
+}
+			
+			
+			
+var start = document.getElementById("checked_in_time").value;
+var end = document.getElementById("time").value;
+
+function diff(checked_in_time, time) {
+    checked_in_time = checked_in_time.split(":");
+    time = time.split(":");
+    var checked_in_timeDate = new Date(0, 0, 0, start[0], start[1], 0);
+    var timeDate = new Date(0, 0, 0, end[0], end[1], 0);
+    var diff = timeDate.getTime() - checked_in_timeDate.getTime();
+    var hours = Math.floor(diff / 1000 / 60 / 60);
+    diff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(diff / 1000 / 60);
+    
+    return (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+}
+
+document.getElementById("diff").value = diff(start, end);
+								
+
+function getResponseCodeMessage(res)
+{
+
+switch(res) {
+    case "1":
+        response = "No answer, at Door";
+        break;
+    case "2":
+        response = "Patient/Caregiver refused";
+        break;
+    case "3":
+        response = "Doctor Notified";
+        break;
+    case "4":
+        response = "Patient Hospitalized";
+        break;
+    case "5":
+        response = "Doctor Visit";
+        break;
+    case "6":
+        response = "Other reason";
+        break;
+   default: 
+        response = "improper response";
+        
+
+
+}
+return 	response;
+}
+
+
+function go_to_show_schedules(){
+	
+	$('#submit_button').prop('disabled', true);
+	window.location='./patient_selection.html';
+	
+}
+		
+
+        </script>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                    
+                </a>
+                
+            </div>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                     <li>
+					<a href="regenerate_pin.html">Create New PIN</a>
+                      
+                    </li>
+                    <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+					<li>
+                       <a href="#" onclick="logout();">Logout</a>
+                    </li>
+                     
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+            <div class="col-lg-12 col-sm-12 col-sm-12">
+            
+
+<div class="container">
+  
+  
+  <div class="row">
+    
+   
+<div class="col-md-offset-3 col-sm-6 col-sm-offset-3">
+          <section class="global-form">
+        <span id="bootstrap"></span>
+        <div id="pageLoader" style="position: relative; top: 175px;">
+ <div>
+       <center><img src="images/loading.gif" class="img-responsive img-center" alt="gif icon" style="height:45PX;" /> </center>
+    </div>
+    </div>
+	
+        <form method="post" action="patient_selection.html" onsubmit="return formValidation();" role="global" style="padding: 12px;" id="form_id">
+        
+          <h3><p class="text-center" style="color:#000000">Visit Details</p></h3>
+        <center>You have checked-in when patient was unavailable.</center>
+         
+          <br>
+   <span class="col-md-12 col-xs-12 col-sm-12">
+
+<div style="border: none;" class="col-md-12 col-xs-12 col-sm-12"> 
+<div class="input-group">
+<span class="glyphicon glyphicon-user" class="col-md-12 col-xs-12 col-sm-12" style="border: none;"></span>
+<span style=" background-color: none" id="exampleInputpatientname1"></span>
+    </div>
+      </div>
+      
+      
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<div class="input-group">
+
+ <span class="glyphicon glyphicon-bed"  style="border: none;"></span>
+ <span style=" background-color: none"  id="exampleInputvisittype1"></span>
+ </div>
+ </div>
+
+
+
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<div class="input-group">
+  <span class="glyphicon glyphicon-time"  style="border: none;"></span>Scheduled Time:
+ <span style=" background-color: none"  id="exampleInputscheduledtime1"></span>
+      </div>
+      </div>
+
+
+
+
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<div class="input-group">
+  <span class="glyphicon glyphicon-pencil"  style="border: none;"></span>
+  
+<span style=" background-color: none"  id="exampleInputscheduledtime1">Check-In Time:
+<span id="checked_in_time"></span><span id="checked_in_time_dur" hidden='true'></span> </span>
+      </div>
+      </div>
+
+
+<b>
+<span class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+</b>
+
+
+
+
+<div  style="border: none;" class="col-md-6 col-xs-12 col-sm-6"> 
+<div class="input-group">
+  <span class="glyphicon glyphicon-pencil"  style="border: none;"></span>
+  
+<span style=" background-color: none"  id="exampleInputscheduledtime1">Reason:
+<span id="reason_codes"></span><span id="checked_in_time_dur" hidden='true'></span> </span>
+      </div>
+      </div>
+
+
+
+<b>
+
+<span class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+
+
+</b>
+
+</span>
+
+<button type="submit" name="go" onclick="go_to_show_schedules()" class="btn btn-lg btn-primary btn-block" id="submit_button" >Show Schedules</button>
+
+</form>
+        
+      
+      </section>  
+      </div>
+  </div>
+</div>
+  <div class="form-links" id="link_id">
+        <p class="text-center"><a onclick="navigator.app.loadUrl('http://www.ondemandhomecare.com/', { openExternal:true });" style="color: #FFFFFF ">www.ondemandhomecare.com</a></p>
+
+        </div>
+</body>
+</html>

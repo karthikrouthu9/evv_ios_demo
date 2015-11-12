@@ -1,0 +1,71 @@
+p.dotted {	border-bottom-style: inset;
+			border-top-style: none;
+			border-left-style: none;
+			border-right-style: none;
+		}
+	    
+	    html, body, #map-canvas 
+	  {
+        height: 74%;
+        margin: 0;
+        padding: 0px;
+        
+      }
+   
+body
+{
+overflow-x: hidden;
+}
+	
+		#div_signcontract{ width: 100%; }
+		.popupHeader{ margin: 10px; }
+		
+		
+		#errmsg
+{
+color: black;
+}
+
+.glyphicon{
+
+font-size: 22px; 
+color: #1357A6;
+}
+#class_form
+{
+font-size: 22px; 
+color: #1357A6;
+}
+
+#timer, #patient_available
+{
+font-size: 14px;
+}
+
+
+#width_id
+{
+
+}
+
+#label_id
+{
+font-weight: unbold;
+
+
+}
+.glyphicon-user:before {
+  margin-right: 5px;
+}
+.glyphicon-bed:before {
+  margin-right: 5px;
+}
+.glyphicon-time:before {
+  margin-right: 5px;
+}
+
+
+#clear_button, #check_out, #proceed_to_check_out, #show_other_schedules, #check_out_later, #check_out_summary_button, #check_in_time
+{
+background-color: #1357A6;
+}

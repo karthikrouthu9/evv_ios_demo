@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta UTF-8">
+  
+	<title>Electronic Visit Verification Show other Schedules Screen</title>
+<style>
+html
+{
+overflow-x: hidden;
+}
+body
+{
+overflow-x: hidden;
+}
+
+.form-links a {
+		color: #fff;
+	}
+.patient_info {
+    background-color: #F8F8F8;
+    margin: 3px;
+}
+	.patient_info1{
+    background-color: #F8F8F8;
+    margin: 3px;
+	}
+	.col {
+    padding: 0px !important;
+}
+	
+	</style>
+
+
+			<script src="plugins/jquery-1.11.2.js"></script>
+     		<script src="plugins/jquery-1.11.2.min.js"></script>
+     		<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+			<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+     		<script type="text/javascript" src="cordova.js"></script>
+  			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			<script src="js/global.js"></script>
+     		<script src="plugins/bootbox.js"></script>
+    		<script src="plugins/bootbox.min.js"></script>
+     		
+			
+     		
+    		
+			
+     		<script type="text/javascript">
+			
+		$(document).ready(function(){
+				
+
+    document.addEventListener("deviceready",onDeviceReady,false);       
+});
+		
+
+				        
+	 
+	function onDeviceReady() {
+document.addEventListener("backbutton", onBackKeyDown, false);
+	         $(".col").hide();
+       			  
+
+   	var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE)
+    {
+      window.location='./first_screen.html';
+               return false;
+    }
+   else
+   {
+   		
+   } 
+   
+  $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
+
+		    
+		  
+		   
+        $.ajax({
+          url:"http://183.82.96.212:8080/services/session/token",
+          type:"get",
+          dataType:"text",
+          timeout:20000,
+           crossDomain: true,
+          error:function (jqXHR, textStatus, errorThrown) {
+			if(textStatus==="timeout") {
+					  bootbox.dialog({
+					  closeButton: false,
+	        			  message: "Problem connecting with server. Please try after sometime.",
+	        			  title: "Alert",
+	        			  buttons: {
+	        			    success: {
+	        			      label: "OK",
+	        			      className: "btn-danger",
+	        			      callback: function() {
+	        			    	  
+	        			    	  exit_app();
+	        			      }
+	        			    
+	        			    }
+	        			    
+	        			    
+	        			  }
+	        			});
+						
+						}
+          },
+          success: function (token) {   
+ 
+   	var device_uuid = device.uuid;
+	var d = document.getElementById("device_uuid");
+	var token =token;
+	var header = "X-CSRF-TOKEN";
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+	
+            $.ajax({
+              url: 'http://183.82.96.212:8080/m_service/m_resources/get_all_schedules',
+              type: "POST",
+	  		  //data: 'device_uuid='+'8dc6cf319947e729',
+      		  data: 'device_uuid='+device.uuid,
+              dataType: "json",
+               timeout:20000,
+              crossDomain: true,
+              
+			  error: function (jqXHR, textStatus, errorThrown) {
+			 
+               
+              },
+              success: function (data) {
+            
+			  $("#sucess_id").show();
+			    var json = data;
+                
+                if(json.patientdata.length==0)
+			{
+		//document.getElementById("result_response").innerHTML = "<div class='alert alert-info' role='alert'>No visits are scheduled for today</div>";
+		
+			document.getElementById("result_response").innerHTML ="No visits are scheduled for today";
+				$('#patient_sec').hide();
+			}
+			else
+			{
+			
+			$("#touch_response").show();
+			var j=1;
+			var data=''; 
+			for(var i = 0; i < json.patientdata.length; i++) {
+			
+    		var obj = json.patientdata[i];
+if(obj.evv_mobile_visit_status=='1')
+{
+if(obj.agency_name.length > 20)
+{
+agency_name=obj.agency_name.substring(0,20)+'...';
+}
+data +=	'<div class="col-xs-12 bg-info patient_info" style=""><a href="#" class="pull-left" style="padding-right: 15px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 60px;width: 60px;"></a><div class="media-body" style=" padding-right: 22px;"><h4>'+obj.patient_name+' </h4><p><small>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+agency_name+'</small></p></div><span class="pull-right"><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;margin-top: -34px;" class="glyphicon glyphicon-menu-down "></i></a><br></span><div class="col-xs-12 bg-info patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br><small>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</small></address></div>	</div></div>';
+}
+
+else if(obj.evv_mobile_visit_status=='2'){
+if(obj.agency_name.length > 20)
+{
+agency_name=obj.agency_name.substring(0,20)+'...';
+}
+data +=	'<div class="col-xs-12 bg-success patient_info" style=""><a href="#" class="pull-left" style="padding-right: 15px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 60px;width: 60px;"></a><a href="visit_details.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'" class="pull-right">  <button type="button" class="btn btn-success pull-right custom" style="margin-top: 30px;">Visit Details</button></a><div class="media-body" style=" padding-right: 22px;" ><h4>'+obj.patient_name+' </h4><p><small>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+agency_name+'</small></p></div><span class="pull-right" ><a href="#" class="patient_click pull-right" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px; margin-top: -34px;"class="glyphicon glyphicon-menu-down "></i></a><br></span><div class="col-xs-12 bg-success patient_info1 col '+obj.sch_uuid+'" ><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br><small>'+obj.address_line1;
+
+
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</small></address></div>	</div></div>';
+	}	
+	else if(obj.evv_mobile_visit_status=='3')
+	{
+	if(obj.agency_name.length > 20)
+{
+agency_name=obj.agency_name.substring(0,20)+'...';
+}
+data +=	'<div class="col-xs-12 bg-warning patient_info" style=""><a href="#" class="pull-left" style="padding-right: 15px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 60px;width: 60px;"></a><a href="patient_not_available_details.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'" class="pull-right">  <button type="button" class="btn btn-warning custom" style="margin-top: 30px;">Visit Details</button></a><div class="media-body" style=" padding-right: 22px;"><h4>'+obj.patient_name+' </h4><p><small>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+agency_name+'</small></p></div><span class="pull-right" ><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px; margin-top: -34px;"class="glyphicon glyphicon-menu-down "></i></a><br></span><div class="col-xs-12 bg-warning patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br><small>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</small></address></div>	</div></div>';
+	
+	}
+	
+	else{
+if(obj.agency_name.length > 20)
+{
+agency_name=obj.agency_name.substring(0,20)+'...';
+}
+data +=	'<div class="col-xs-12 bg-info patient_info" style=""><a href="#" class="pull-left" style="padding-right: 15px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 60px;width: 60px;"></a><div class="media-body" style=" padding-right: 22px;"><h4>'+obj.patient_name+' </h4><p><small>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+agency_name+'</small></p></div><span class="pull-right" ><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px; margin-top: -34px;"class="glyphicon glyphicon-menu-down "></i></a><br></span><div class="col-xs-12 bg-info patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br><small>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</small></address></div>	</div></div>';
+	}
+			j++;
+			 }
+			}
+
+			 if(json.patientdata.length>0)
+			 {
+            document.getElementById("patient_sec").innerHTML =data ;    
+             }
+               $(".col").hide();
+            
+            
+            
+            
+               $('.patient_click').click(function () {
+	        
+			  if ($("."+$(this).attr("id")).is(":hidden")) {
+	   	        $(".col").slideUp( "slow");
+
+	   	        $("."+$(this).attr("id")).slideToggle( "slow");
+				
+	   	        $(".patient_click>.glyphicon").removeClass( "glyphicon-menu-up");
+	   	        $(".patient_click>.glyphicon").addClass( "glyphicon-menu-down" );
+				
+	   	        $("#"+$(this).attr("id")+">.glyphicon").removeClass( "glyphicon-menu-down" );
+	   	        $("#"+$(this).attr("id")+">.glyphicon").addClass( "glyphicon-menu-up" );
+	   	        
+    
+}
+else{
+	   	        $("."+$(this).attr("id")).slideToggle( "slow");
+				
+	   	        
+	   	        $("#"+$(this).attr("id")+">.glyphicon").removeClass( "glyphicon-menu-up" );
+	   	        $("#"+$(this).attr("id")+">.glyphicon").addClass( "glyphicon-menu-down" );
+	   	        
+}
+			});
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                //$(".col").slideUp( "slow");
+              
+			  }
+            });
+         
+
+	}
+			
+}); 
+	$('#collapse2').on('.panel-collapse.collapse'), function() {
+	$(".servicedrop").addClass('glyphicon-chevron-up').removeClass('glyphicon-chevron-down');
+  }
+
+$('#collapse2').on('.panel-collapse.collapse.in'), function() {
+    $(".servicedrop").addClass('glyphicon-chevron-down').removeClass('glyphicon-chevron-up');
+  }
+  }
+  
+  function onBackKeyDown(e) {
+			 
+				navigator.app.backHistory();
+			 
+			}
+  
+  
+  
+        </script>
+</head>
+
+<body>
+  
+
+  <style type="text/css">/* 1st level */
+.nav label {
+	color: blue;
+}
+
+/* 2nd level */
+.tree > li > label {
+  padding:10px 15px;  
+}
+body {
+	background-image: url("ats_background.jpg");
+   	background-size: cover;
+    overflow-y: scroll;
+     }
+h3
+{
+color:black;
+}
+
+</style>
+
+  
+<style type="text/css"></style></head>
+<body cz-shortcut-listen="true">
+  <div class="container">
+  
+  <div class="row">
+  <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <a href="check-in_summary.html" onclick="window.history.go(-1); return false;"><img src="images/backbutton.png" alt style="height: 50px;float: left;""></a>
+     	
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                </a>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                    <li>
+					<a href="create_pin.html">Create New PIN</a>
+                      
+                    </li>
+                    <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+					<li>
+						<a href="#" onclick="logout();">Logout</a>
+                      
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<br><br><br>
+
+   <h3><p class="text-center" style="color:#000000">Today's Schedules</p></h3>
+
+<div class="container">
+
+    <div class="row" id="patient_sec">
+	<p class="text-center">Schedules are loading. Please wait...
+	  <img src="images/loading.gif" class="img-responsive center-block" alt="gif icon" style="height:45PX; position: relative; top: 175px;"/></p>
+        
+	
+  			
+    </div>
+    <!-- /.row (nested) -->
+
+    <!-- /.row -->
+</div>
+
+<h4><center><span id='result_response'></span></center></h4>
+  
+
+      </div>
+      
+      <div class="col-sm-12 col-xs-12 col-md-12" id="log_out_button"  style="display: none;">
+<div class="text-center">
+<button type="submit" name="go" onclick="logout();"  class="btn btn-lg btn-primary btn-block" >Logout</button>
+</div>
+ <input type="hidden" class="form-control input-lg" id="device_uuid"/>
+</div> 
+</body>
+ 
+
+</html>

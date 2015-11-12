@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta UTF-8">
+  
+	<title>Electronic Visit Verification Schedules Screen</title>
+<style>
+html
+{
+overflow-x: hidden;
+}
+body
+{
+overflow-x: hidden;
+}
+
+.form-links a {
+		color: #fff;
+	}
+.patient_info {
+    background-color: #F8F8F8;
+   
+}
+	.patient_info1{
+    background-color: #F8F8F8;
+  
+	}
+	.col {
+    padding: 0px !important;
+}
+p.padding {
+    padding-left: 10cm;
+}	
+
+	</style>
+			
+     		<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+			<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+     		<script src="plugins/jquery-1.11.2.js"></script>
+     		<script src="plugins/jquery-1.11.2.min.js"></script>
+			<script type="text/javascript" src="cordova.js"></script>
+			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			<script src="js/global.js"></script>
+     		<script src="plugins/bootbox.js"></script>
+    		<script src="plugins/bootbox.min.js"></script>
+    		
+			
+     		
+    		
+			
+     		<script type="text/javascript">
+			
+		$(document).ready(function(){
+				
+	
+    document.addEventListener("deviceready",onDeviceReady,false);       
+});
+		
+
+				        
+	 
+	function onDeviceReady() {
+
+ document.addEventListener("backbutton", onBackKeyDown, false);
+	      
+       		
+        	
+   	var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE)
+    {
+      window.location='./first_screen.html';
+               return false;
+    }
+   else
+   {
+   		
+   } 
+
+  function onBackKeyDown(e) {
+
+  e.preventDefault();
+ 
+}
+ 
+  function onClose() {
+
+  navigator.app.exitApp();
+}
+ 
+  
+   footer {
+            background-color: #333;
+            width: 100%;
+            bottom: 0;
+            position: fixed;
+        }
+        </script>
+</head>
+
+<body>
+  
+
+  <style type="text/css">
+body {
+	background-image: url("ats_background.jpg");
+   	background-size: cover;
+    overflow-y: scroll;
+     }
+
+
+
+
+</style>
+
+  
+
+</head>
+
+<body>  
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+	
+    <center>
+  <img src="images/homecare_logo.png" class="img-responsive" alt="" style="HEIGHT:45PX;"/>
+  </center>
+</nav>   
+ 
+ <br>
+ <br>
+
+ <br>
+ 
+  <h3><p class="text-center" style="color:#000000">Logout</p></h3>
+ <p class="text-center">You have successfully logged out from Electronic Visit Verification Application. Thank you for your time.</p>
+<nav class="navbar navbar-default navbar-fixed-bottom" style="color:#FFFFFF" role="navigation">
+   
+<div class="col-sm-6 col-xs-6 col-lg-6 col-md-6">
+<button type="button" onclick="navigator.app.exitApp();" class="btn btn-lg btn-warning btn-block">Close</button>
+</div>
+
+
+
+<div class="col-sm-6 col-xs-6 col-lg-6 col-md-6">
+<button type="button" id="submit_button" onclick="window.location='./log-in.html';" class="btn btn-lg btn-primary btn-block">Log-In</button>
+</div>
+
+</body>
+</html>

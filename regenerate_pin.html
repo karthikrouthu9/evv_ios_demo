@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+		  	<title>Electronic Visit Verification Reset PIN Form</title>
+			
+			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			
+    		<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+     		<script src="plugins/jquery-1.11.2.min.js"></script>
+    		<script src="plugins/jquery-1.11.2.js"></script>
+    		<script type="text/javascript" src="cordova.js"></script>
+    		<script src="js/create_pin.js"></script>
+    		<script src="js/global.js"></script>
+			<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+         	<script src="plugins/bootbox.js"></script>
+        	<script src="plugins/bootbox.min.js"></script>
+    		
+    		
+    		<script>
+	$(document).ready(function(){
+				
+
+    document.addEventListener("deviceready",onDeviceReady,false);       
+});
+		
+function onDeviceReady() {
+	
+ document.addEventListener("backbutton", onBackKeyDown, false);
+ }
+
+function onBackKeyDown(e) {
+
+  e.preventDefault();
+ 
+}
+</script>    	
+    		
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<a href="patient_selection.html" onclick="window.history.go(-1); return false;"><img src="images/backbutton.png" alt style="height: 50px;float: left;""></a>
+     	<div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+        <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+        </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about_login.html">About Us</a>
+                    </li>
+                    <li>
+                        <a href="contactus_login.html">Contact Us</a>
+                    </li>
+                     <li>
+					<a href="regenerate_pin.html">Create New PIN</a>
+                    </li>
+					
+                      <li>
+                        <a href="report_a_problem_login.html">Report a Suggestion/Problem</a>
+                    </li>
+                     <li>
+                        <a href="faq_login.html">FAQs</a>
+                    </li>
+                    <li>
+                       <a href="#" onclick="logout();">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    
+<div class="container">
+  
+  
+  <div class="row" id="pwd-container">
+    <div class="col-md-4"></div>
+   
+    <div class="col-md-4">
+      <section class="global-form">
+        <span id="bootstrap"></span>
+        <form method="post"  onsubmit="return device_pin_validation();" role="global">
+        
+         
+         
+             <h3><p class="text-center" style="color:#000000">Create Log-In PIN</p></h3>
+             <br>
+     		  
+          <input type="tel" pattern="\d*" maxlength="4" placeholder="Enter new Log-In PIN"  class="form-control input-lg" id="new_device_pin"/>
+          
+          <input type="tel" pattern="\d*" maxlength="4" class="form-control input-lg"  placeholder="Re-enter New Log-In PIN" id="confirm_device_pin"/>
+          
+         
+           <input type="hidden" class="form-control input-lg" id="device_uuid"/>
+        
+          
+          <div class="pwstrength_viewport_progress"></div>
+          
+          
+          <button type="submit" name="go" id="submit_button" class="btn btn-lg btn-primary btn-block" style="background-color: #1357A6;">Create PIN</button>
+          
+         
+          
+        </form>
+        
+        <div class="form-links">
+        <p class="text-center"><a onclick="navigator.app.loadUrl('http://www.ondemandhomecare.com/', { openExternal:true });" style="color: #FFFFFF ">www.ondemandhomecare.com</a></p>
+
+        </div>
+      </section>  
+      </div>
+      
+      
+
+  </div>
+  
+  
+  
+</div>
+</body>
+
+</html>

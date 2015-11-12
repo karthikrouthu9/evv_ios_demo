@@ -1,0 +1,24 @@
+
+
+div#login {
+				color: #5d5d5d;
+				background: #f2f2f2;
+				padding: 26px;
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+				
+	
+	height:28%;
+	position: absolute;
+	top:0;
+	bottom: 20%;
+	left: 0;
+	right: 0;
+	
+	margin: auto;
+				 }
+	
+div#login img {
+					display: block;
+					margin: 0 auto;
+					 }

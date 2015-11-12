@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta UTF-8">
+  
+	<title>Electronic Visit Verification Schedules Screen</title>
+<style>
+html
+{
+overflow-x: hidden;
+}
+body
+{
+overflow-x: hidden;
+}
+
+.form-links a {
+		color: #fff;
+	}
+.patient_info {
+    background-color: #F8F8F8;
+   
+}
+	.patient_info1{
+    background-color: #F8F8F8;
+  
+	}
+	.col {
+    padding: 0px !important;
+}
+p.padding {
+    padding-left: 10cm;
+}	
+
+	</style>
+			
+     		<link href="bootstrap-3.3.4/css/bootstrap.css" rel="stylesheet">
+			<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" media="screen" type="text/css" />
+     		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+     		<script src="plugins/jquery-1.11.2.js"></script>
+     		<script src="plugins/jquery-1.11.2.min.js"></script>
+			<script type="text/javascript" src="cordova.js"></script>
+			<link rel='stylesheet' href='style.css' type='text/css'/> 
+			<script src="js/global.js"></script>
+     		<script src="plugins/bootbox.js"></script>
+    		<script src="plugins/bootbox.min.js"></script>
+    		
+			
+     		
+    		
+			
+     		<script type="text/javascript">
+			
+		$(document).ready(function(){
+				
+	
+    document.addEventListener("deviceready",onDeviceReady,false);       
+});
+		
+
+				        
+	 
+	function onDeviceReady() {
+
+ document.addEventListener("backbutton", onBackKeyDown, false);
+	         $(".col").hide();
+       			  
+var device_version =  device.version;  
+        	document.getElementById('device_version').value=device_version;
+        	
+   	var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE)
+    {
+      window.location='./first_screen.html';
+               return false;
+    }
+   else
+   {
+   		
+   } 
+   
+  $.ajaxSetup({
+        xhrFields: {
+            withCredentials: true
+        }
+    });
+
+		    
+		  
+		   
+        $.ajax({
+          url:"http://183.82.96.212:8080/services/session/token",
+          type:"get",
+          dataType:"text",
+           crossDomain: true,
+          error:function (jqXHR, textStatus, errorThrown) {
+			
+          },
+          success: function (token) {   
+ 
+   	var device_uuid = device.uuid;
+	var d = document.getElementById("device_uuid");
+	var token =token;
+	var header = "X-CSRF-TOKEN";
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+	
+            $.ajax({
+              url: 'http://183.82.96.212:8080/m_service/m_resources/get_schedules',
+              type: "POST",
+	  		  //data: 'device_uuid='+'8dc6cf319947e729',
+      		  data: 'device_uuid='+device.uuid,
+              dataType: "json",
+              
+              crossDomain: true,
+              
+              
+			  error: function (jqXHR, textStatus, errorThrown) {
+
+			  bootbox.dialog({
+  message: "Problem connecting with server. Please try after sometime.",
+  title: "Message",
+  buttons: {
+    success: {
+      label: "OK",
+      className: "btn-danger",
+      callback: function() {
+
+      }
+    
+    }
+    
+    
+  }
+});
+               
+              },
+              success: function (data) {
+            
+			  $("#sucess_id").show();
+			    var json = data;
+                if(data.response=="2")
+				{
+				
+				var obj = json.patientdata[0];
+				obj.sch_uuid;
+				
+				window.location= "check-in_summary.html?sch_uuid="+obj.sch_uuid;
+      			}
+				else
+				{
+                if(json.patientdata.length==0)
+			{
+		
+			document.getElementById("result_response").innerHTML ="No visits are scheduled for today.";
+			$('#log_out_button').show();
+			$('#log_out_button').css({'visibility': 'visible'});
+			$('#patient_sec').hide();
+			}
+			else
+			{
+			
+			$("#touch_response").show();
+			var j=1;
+			var data=''; 
+			for(var i = 0; i < json.patientdata.length; i++) {
+			
+    		var obj = json.patientdata[i];
+if(obj.evv_mobile_visit_status=='1')
+{
+
+data +=	'<div class="col-xs-12 bg-info patient_info" style=""><a href="#" class="pull-left"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><span class="pull-right"><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;"class="glyphicon glyphicon-menu-down "></i></a><br><a href="check-in.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'" class="pull-right">  <button type="button" class="btn btn-primary custom">Check In</button></a></span><div class="media-body"><h4>'+obj.patient_name+' </h4><p>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+obj.agency_name+'</p></div><div class="col-xs-12 bg-info patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</address></div>	</div></div>';
+
+}
+
+else if(obj.evv_mobile_visit_status=='2'){
+data +=	'<div class="col-xs-12 bg-success patient_info" style=""><a href="#" class="pull-left" style="padding-right: 30px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 65px;width: 65px;"></a><span class="pull-right" ><a href="#" class="patient_click pull-right" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;"class="glyphicon glyphicon-menu-down "></i></a><br><a href="visit_details.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'">  <button type="button" class="btn btn-success custom">Visit Details</button></a></span><div class="media-body" style=" padding-right: 22px;"><h4>'+obj.patient_name+' </h4><p>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+obj.agency_name+'</p></div><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br>'+obj.address_line1;
+
+
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</address></div>	</div>';
+}	
+	else if(obj.evv_mobile_visit_status=='3')
+	{
+	
+data +=	'<div class="col-xs-12 bg-warning patient_info" style=""><a href="#" class="pull-left"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><span class="pull-right" ><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;"class="glyphicon glyphicon-menu-down "></i></a><br><a href="patient_availability_summary.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'" class="pull-right">  <button type="button" class="btn btn-warning custom">Visit Details</button></a></span><div class="media-body"><h4>'+obj.patient_name+' </h4><p>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+obj.agency_name+'</p></div><div class="col-xs-12 bg-warning patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ','+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</address></div>	</div></div>';
+	
+	}
+	
+	else{
+
+data +=	'<div class="col-xs-12 bg-info patient_info" style=""><a href="#" class="pull-left"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><span class="pull-right" ><a href="#" class="pull-right patient_click" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;"class="glyphicon glyphicon-menu-down "></i></a><br><a href="check-in.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'" class="pull-right">  <button type="button" class="btn btn-primary custom">Check In</button></a></span><div class="media-body"><h4>'+obj.patient_name+' </h4><p>'+obj.visit_type+'  <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+obj.agency_name+'</p></div><div class="col-xs-12 bg-info patient_info1 col '+obj.sch_uuid+'" style=""><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 75px;width: 75px;"></a><div class="media-body" style=" padding-left: 22px;"><address><strong>Address </strong><br>'+obj.address_line1;
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone:'+obj.patient_mobile_number+'</address></div>	</div></div>';
+
+	}
+					j++;
+			 }
+			}
+
+			 if(json.patientdata.length>0)
+			 {
+            document.getElementById("patient_sec").innerHTML =data ;    
+             }
+               $(".col").hide();
+            
+            
+            
+            
+               $('.patient_click').click(function () {
+	        
+			  if ($("."+$(this).attr("id")).is(":hidden")) {
+	   	        $(".col").slideUp( "slow");
+
+	   	        $("."+$(this).attr("id")).slideToggle( "slow");
+				
+	   	        $(".patient_click>.glyphicon").removeClass( "glyphicon-menu-up");
+	   	        $(".patient_click>.glyphicon").addClass( "glyphicon-menu-down" );
+				
+	   	        $("#"+$(this).attr("id")+">.glyphicon").removeClass( "glyphicon-menu-down" );
+	   	        $("#"+$(this).attr("id")+">.glyphicon").addClass( "glyphicon-menu-up" );
+	   	        
+    
+}
+else{
+	   	        $("."+$(this).attr("id")).slideToggle( "slow");
+				
+	   	        
+	   	        $("#"+$(this).attr("id")+">.glyphicon").removeClass( "glyphicon-menu-up" );
+	   	        $("#"+$(this).attr("id")+">.glyphicon").addClass( "glyphicon-menu-down" );
+	   	        
+}
+			});
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                //$(".col").slideUp( "slow");
+              }
+			  }
+			  
+            });
+         
+
+	}
+			
+}); 
+	$('#collapse2').on('.panel-collapse.collapse'), function() {
+	$(".servicedrop").addClass('glyphicon-chevron-up').removeClass('glyphicon-chevron-down');
+  }
+
+$('#collapse2').on('.panel-collapse.collapse.in'), function() {
+    $(".servicedrop").addClass('glyphicon-chevron-down').removeClass('glyphicon-chevron-up');
+  }
+  }
+  
+  function onBackKeyDown(e) {
+
+  e.preventDefault();
+ 
+}
+ 
+  
+  
+  
+        </script>
+</head>
+
+<body>
+  
+
+  <style type="text/css">/* 1st level */
+.nav label {
+	color: blue;
+}
+
+/* 2nd level */
+.tree > li > label {
+  padding:10px 15px;  
+}
+body {
+	background-image: url("ats_background.jpg");
+   	background-size: cover;
+    overflow-y: scroll;
+     }
+h3
+{
+color:black;
+}
+
+</style>
+
+  
+<style type="text/css"></style></head>
+<body cz-shortcut-listen="true">
+  <div class="container">
+  
+  <div class="row">
+  <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/homecare_logo.png" alt style="height: 39px;margin-top: -8px;"">
+                </a>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="contactus.html">Contact</a>
+                    </li>
+                    <li>
+					<a href="create_pin.html">Create New PIN</a>
+                      
+                    </li>
+					<li>
+					<a href="log-in.html">Logout</a>
+                      
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<br><br><br>
+
+ <h3><p class="text-center">Today's Schedules</p></h3>
+
+<div class="container">
+
+    <div class="row" id="patient_sec">
+	
+	<p class="text-center">Schedules are loading. Please wait...
+	  <img src="images/loading.gif" class="img-responsive center-block" alt="gif icon" style="height:45PX;"/></p>
+        
+  			
+    </div>
+    <!-- /.row (nested) -->
+
+    <!-- /.row -->
+</div>
+<h4><p class="text-center"><span id='result_response'></span></p></h4>
+<br>
+
+<div class="col-sm-12 col-xs-12 col-md-12">
+<div class="text-center">
+<button type="submit" name="go" onclick="window.location = 'log-in.html';"  class="btn btn-lg btn-primary btn-block" id="log_out_button"  style="visibility: hidden;" >Logout</button>
+</div>
+</div> 
+ '<div class="col-xs-12 bg-success patient_info" style=""><a href="#" class="pull-left" style="padding-right: 30px; padding-top: 22px;"><img src="images/images.png" class="media-object img-circle" alt="Image" style="height: 65px;width: 65px;"></a><span class="pull-right" ><a href="#" class="patient_click pull-right" id='+obj.sch_uuid+'><i href="#"  style="font-size: 30px;padding: 9px;"class="glyphicon glyphicon-menu-down "></i></a><br><a href="visit_details.html?sch_uuid='+obj.sch_uuid+'&visit_uuid='+obj.visit_uuid+'&visit_type_id='+obj.visit_type_id+'&patient_uuid='+obj.patient_uuid+'&employee_uuid='+obj.employee_uuid+'&business_uuid='+obj.business_uuid+'&user_id='+obj.user_id+'">  <button type="button" class="btn btn-success custom">Visit Details</button></a></span><div class="media-body" style=" padding-right: 22px;"><h4>Karthik</h4><p><small>Visit Type <br>'+obj.sch_start_timestamp+' - '+obj.sch_end_timestamp+'<br>'+obj.agency_name+'</small></p></div><a href="#" class="pull-left"><img src="images/address_ping.png" class="media-object img-circle" alt="Image" style="height: 50px;width: 50px;"></a><div class="media-body"><address><strong>Address </strong><br><small>'+obj.address_line1;
+
+
+
+if(obj.address_line2)
+{
+data += ', '+obj.address_line2;
+}
+data += '<br>'+obj.city+', '+obj.state+'<br>Phone: '+obj.patient_mobile_number+'</small></address></div></div>';
+   <input type="hidden" class="form-control input-lg" id="device_uuid"/>
+    <input type="hidden"  id="device_version"/>
+          
+  
+  
+  <!--scripts loaded here-->
+  
+  <script src="./Codeply preview_files/jquery.min.js"></script>
+  <script src="./Codeply preview_files/bootstrap.min.js"></script>
+  
+  <script>
+  $('.tree-toggle').click(function () {
+ $(this).parent().children('ul.tree').toggle(200);
+});
+  </script>
+ <div class="form-links">
+       </div>
+      </div>
+</body>
+</html>
