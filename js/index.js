@@ -1,6 +1,6 @@
 	$(document).ready(function(){
 		
-	
+	alert("Doc Ready");
     document.addEventListener("deviceready",onDeviceReady,false);     
 
 });
@@ -21,7 +21,7 @@
 	 }
 
 		function onDeviceReady() {
-			
+			alert("Device Ready");
  		var element = document.getElementById('deviceProperties');
 		var device_uuid = device.uuid;
        
@@ -37,7 +37,7 @@
     else
 {
     	
-    	
+    	alert("Else Loop");
 		
 		
 		
@@ -48,7 +48,7 @@
             withCredentials: true
         }
     });
-
+alert("Before Ajax");
 		$.ajax({
           url:"http://183.82.96.212:8080/services/session/token",
           type:"get",
@@ -78,7 +78,7 @@
 		        } 
           },
           success: function (token) {   
-
+		alert("Success Token func");
    	var device_uuid = device.uuid;
 	var d = document.getElementById("device_uuid");
 	var token =token;
@@ -87,7 +87,7 @@
         xhr.setRequestHeader(header, token);
     });
 	
-
+	alert("After Success Token");
 		
     		is_device_registered(device_uuid);
    
