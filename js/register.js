@@ -15,7 +15,7 @@ $(document).ready(function(){
 
    document.addEventListener("backbutton", onBackKeyDown, false);
 		var element = document.getElementById('deviceProperties');
-		var device_uuid = uuid;
+	/*	var device_uuid = uuid;
 		var device_name  = device.name;
        	var device_model  = device.model;
        	var device_platform =  device.platform;                        
@@ -26,7 +26,7 @@ $(document).ready(function(){
        	document.getElementById('device_uuid').value=device_uuid;
 		document.getElementById('device_model').value=device_model;
 		document.getElementById('device_platform').value=device_platform;
-		document.getElementById('device_version').value=device_version;
+		document.getElementById('device_version').value=device_version;*/
 
    
 			}
@@ -39,17 +39,18 @@ alert("Inside Function");
  var password=password;
 
 var device_uuid = globalVariable;
-var device_name = document.getElementById("device_name");
+alert("Device Alerts");
+		alert(device_uuid);
+/*var device_name = document.getElementById("device_name");
 var device_model = document.getElementById("device_model");
 var device_platform = document.getElementById("device_platform");
 var device_version = document.getElementById("device_version");
 
-alert("Device Alerts");
-		alert(device_uuid);
+
 		alert(device_name);
 		alert(device_model);
 		alert(device_platform);
-		alert(device_version);
+		alert(device_version);*/
 
 $.ajaxSetup({
         xhrFields: {
