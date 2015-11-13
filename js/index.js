@@ -148,17 +148,19 @@ alert("Before Ajax");
 			                	//data.logindata[0].is_security_question_answered;
 							if(data.is_security_question_answered==1 && data.logindata[0].count>=1)
       {
-   
+   	alert("Already Registered");
       window.location='./log-in.html';
       return false;
       }
       else if(data.is_security_question_answered==0 && data.logindata[0].count>=1)
       {
+      	alert("Enter Security question and answer");
       window.location='./portal_security_questions.html?user_id='+data.user_id;
       return false;
       }
       else
       {
+      	alert("Registration");
       window.location='./registration.html';
       return false;
       }
