@@ -107,7 +107,7 @@ $.ajaxSetup({
               url: 'http://183.82.96.212:8080/?q=m_service/m_resources/register_device',
               type: "POST",
 	  		  //data: 'device_uuid='+'8dc6cf319947e729',
-      		  data: { username:encodeURIComponent(username),password:encodeURIComponent(password),pin:encodeURIComponent(pin),device_uuid:encodeURIComponent(device_uuid.value), device_name:encodeURIComponent(device_name.value),device_model:encodeURIComponent(device_model.value),device_platform:encodeURIComponent(device_platform.value), device_version:encodeURIComponent(device_version.value), device_already_registered:encodeURIComponent("0")}, 
+      		  data: { username:encodeURIComponent(username),password:encodeURIComponent(password),pin:encodeURIComponent(pin),device_uuid:encodeURIComponent(device_uuid.value), device_name:'appledevice',device_model:'ios',device_platform:'ios', device_version:'ios', device_already_registered:encodeURIComponent("0")}, 
               dataType: "json",
               crossDomain: true,
               timeout:20000,
