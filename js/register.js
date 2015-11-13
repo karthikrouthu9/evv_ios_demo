@@ -34,11 +34,11 @@ $(document).ready(function(){
 
 function makeCorsRequest_register(username,password,pin) {
 alert("Inside Function");
-alert(device_uuid);
+
  var username=username;
  var password=password;
 
-var device_uuid = uuid;
+var device_uuid = globalVariable;
 var device_name = document.getElementById("device_name");
 var device_model = document.getElementById("device_model");
 var device_platform = document.getElementById("device_platform");
@@ -549,12 +549,13 @@ else{
 }
 
 
-
+var globalVariable;
     function success(uuid)		
 {		
     alert(uuid);		
-   		var device_uuid=uuid;
-		alert(device_uuid);
+   		
+		globalVariable=uuid;
+		makeCorsRequest_register(username,password,pin)
 };		
 function fail(uuid)		
 {		
