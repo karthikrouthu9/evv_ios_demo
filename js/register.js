@@ -21,6 +21,9 @@ function fail(uuid)
    		
     alert("failure function reg");		
 };
+
+alert("Karthik Function");
+alert(uuid);
    document.addEventListener("backbutton", onBackKeyDown, false);
 		var element = document.getElementById('deviceProperties');
 		var device_uuid = device.uuid;
