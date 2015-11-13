@@ -11,33 +11,16 @@ $(document).ready(function(){
     {
     	window.plugins.uniqueDeviceID.get(success, fail);		
   		
-    function success(uuid)		
-{		
-    alert(uuid);		
-   		
-};		
-function fail(uuid)		
-{		
-   		
-    alert("failure function reg");		
-};
 
-alert("Karthik Function");
-alert(uuid);
+
    document.addEventListener("backbutton", onBackKeyDown, false);
 		var element = document.getElementById('deviceProperties');
 		var device_uuid = uuid;
-		
-       	var device_name  = device.name;
+		var device_name  = device.name;
        	var device_model  = device.model;
        	var device_platform =  device.platform;                        
        	var device_version =  device.version;  
-		alert("Device Alerts");
-		alert(device_uuid);
-		alert(device_name);
-		alert(device_model);
-		alert(device_platform);
-		alert(device_version);
+		
 		
        
        	document.getElementById('device_uuid').value=device_uuid;
@@ -51,17 +34,22 @@ alert(uuid);
 
 function makeCorsRequest_register(username,password,pin) {
 alert("Inside Function");
-alert(uuid);
+alert(device_uuid);
  var username=username;
  var password=password;
 
-var device_uuid = document.getElementById("device_uuid");
+var device_uuid = uuid;
 var device_name = document.getElementById("device_name");
 var device_model = document.getElementById("device_model");
 var device_platform = document.getElementById("device_platform");
 var device_version = document.getElementById("device_version");
 
-
+alert("Device Alerts");
+		alert(device_uuid);
+		alert(device_name);
+		alert(device_model);
+		alert(device_platform);
+		alert(device_version);
 
 $.ajaxSetup({
         xhrFields: {
@@ -559,4 +547,17 @@ else{
 }
 }
 }
+
+
+
+    function success(uuid)		
+{		
+    alert(uuid);		
+   		var device_uuid=uuid;
+};		
+function fail(uuid)		
+{		
+   		
+    alert("failure function reg");		
+};
 
