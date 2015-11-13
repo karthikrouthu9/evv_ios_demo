@@ -114,6 +114,8 @@ $.ajaxSetup({
               timeout:20000,
               
 			  error: function (jqXHR, textStatus, errorThrown) {
+			  alert("Error ajax function");
+			  alert(jqXHR.statusText);
 			  $('#submit_button').prop('disabled', false);
 			  $('#username1').prop('disabled', false);
 			  $('#password1').prop('disabled', false);
