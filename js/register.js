@@ -39,7 +39,8 @@ function fail(uuid)
 
 
 function makeCorsRequest_register(username,password,pin) {
-
+alert("Inside Function");
+alert(uuid);
  var username=username;
  var password=password;
 
