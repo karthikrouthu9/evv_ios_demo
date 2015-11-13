@@ -554,6 +554,7 @@ else{
 {		
     alert(uuid);		
    		var device_uuid=uuid;
+		alert(device_uuid);
 };		
 function fail(uuid)		
 {		
