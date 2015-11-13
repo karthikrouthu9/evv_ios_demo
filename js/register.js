@@ -26,11 +26,19 @@ alert("Karthik Function");
 alert(uuid);
    document.addEventListener("backbutton", onBackKeyDown, false);
 		var element = document.getElementById('deviceProperties');
-		var device_uuid = device.uuid;
+		var device_uuid = uuid;
+		
        	var device_name  = device.name;
        	var device_model  = device.model;
        	var device_platform =  device.platform;                        
        	var device_version =  device.version;  
+		alert("Device Alerts");
+		alert(device_uuid);
+		alert(device_name);
+		alert(device_model);
+		alert(device_platform);
+		alert(device_version);
+		
        
        	document.getElementById('device_uuid').value=device_uuid;
 		document.getElementById('device_model').value=device_model;
