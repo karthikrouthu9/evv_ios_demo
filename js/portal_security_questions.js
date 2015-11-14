@@ -38,6 +38,8 @@ function onBackKeyDown(e) {
     else
     {
     	get_security_questions();
+		}
+		}
     function get_security_questions()
     {
 	
@@ -148,9 +150,7 @@ function onBackKeyDown(e) {
 	
 	
 
-    }}
-		
-		}
+    }
     
     
     
