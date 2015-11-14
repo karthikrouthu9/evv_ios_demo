@@ -256,7 +256,7 @@ var loginpin = /^\d{4}$/;
 		 success:function(data)
 		 {
 		
-		   var  device_uuid=d.value;
+		   //var  device_uuid=d.value;
 		   
 		   
 	 $.ajaxSetup({
@@ -278,7 +278,6 @@ var loginpin = /^\d{4}$/;
           	$('#button').html('Loading...');
 			$('#button').prop('disabled', false);
 			 $('#registrationcode1').prop('disabled', false);
-	
 			$('#button').html('Log-In');
         	  if(textStatus==="timeout") {
 				  bootbox.dialog({
@@ -303,8 +302,8 @@ var loginpin = /^\d{4}$/;
           },
           success: function (token) {   
 
-   	var device_uuid = device.uuid;
-	var d = document.getElementById("device_uuid");
+   	//var device_uuid = device.uuid;
+	//var d = document.getElementById("device_uuid");
 	var token =token;
 	var header = "X-CSRF-TOKEN";
     $(document).ajaxSend(function(e, xhr, options) {
@@ -315,7 +314,7 @@ var loginpin = /^\d{4}$/;
               url: 'http://183.82.96.212:8080/m_service/m_resources/evv_enabled_login',
               type: "POST",
 	  		  //data: 'device_uuid='+'8dc6cf319947e729',
-      		  data: 'device_uuid='+device.uuid,
+      		  data: {device_uuid:device_uuid},
               dataType: "json",
               crossDomain: true,
              timeout: 10000,
@@ -323,9 +322,9 @@ var loginpin = /^\d{4}$/;
 			$('#button').html('Loading...');
 			$('#button').prop('disabled', false);
 			 $('#registrationcode1').prop('disabled', false);
-	
 			$('#button').html('Log-In');
-               bootbox.dialog({
+               
+			   bootbox.dialog({
                closeButton: false,
 		  message: "Your user is not active. Please contact your admin.",
 		  title: "Alert",
@@ -358,8 +357,8 @@ var loginpin = /^\d{4}$/;
 			$('#button').html('Loading...');
 			$('#button').prop('disabled', false);
 			 $('#registrationcode1').prop('disabled', false);
-	
 			$('#button').html('Log-In'); 
+				
 				bootbox.dialog({
 				closeButton: false,
         	message: "For security reasons this User Log-In is blocked. Please contact the site administrator.",
@@ -399,7 +398,6 @@ var loginpin = /^\d{4}$/;
 		$('#button').html('Loading...');
 		$('#button').prop('disabled', false);
 		 $('#registrationcode1').prop('disabled', false);
-	
 		$('#button').html('Log-In');
   
 		 	bootbox.dialog({
@@ -430,8 +428,8 @@ if(loginpin1=="")
 		$('#button').html('Loading...');
 		$('#button').prop('disabled', false);
 		 $('#registrationcode1').prop('disabled', false);
+			$('#button').html('Log-In');
 	
-		$('#button').html('Log-In');
 	bootbox.dialog({
 	closeButton: false,
         	message: "Please enter your Log-In PIN.",
@@ -452,8 +450,8 @@ else{
 		$('#button').html('Loading...');
 		$('#button').prop('disabled', false);
 		 $('#registrationcode1').prop('disabled', false);
-	
 		$('#button').html('Log-In');  
+		
 		bootbox.dialog({
 		closeButton: false,
         	message: "Please enter your 4 digit Log-In PIN.",
