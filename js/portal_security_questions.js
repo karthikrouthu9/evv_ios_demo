@@ -27,7 +27,7 @@ function onBackKeyDown(e) {
 
          //var device_uuid = '8dc6cf319947e729';
        	 var d = document.getElementById("device_uuid");
-		 var device_uuid = device.uuid;
+		 //var device_uuid = device.uuid;
 
     var networkState = navigator.connection.type;
     if (networkState == Connection.NONE)
@@ -244,7 +244,7 @@ var networkState = navigator.connection.type;
            	  $('#submit_button').prop('disabled', true);
            	$('#security_answer').prop('disabled', true);
       
-      				var device_uuid = device.uuid;
+      				//var device_uuid = device.uuid;
        				var security_question=$('#security_question').val();
 					var security_answer=$('input#security_answer').val();
 					event.preventDefault();
@@ -291,7 +291,7 @@ var networkState = navigator.connection.type;
           },
           success: function (token) {   
  
-   	var device_uuid = device.uuid;
+   	//var device_uuid = device.uuid;
 	var d = document.getElementById("device_uuid");
 	var token =token;
 	var header = "X-CSRF-TOKEN";
@@ -383,3 +383,20 @@ function fail(uuid)
 };			
 
 		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
