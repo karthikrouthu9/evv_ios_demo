@@ -20,7 +20,8 @@ function onBackKeyDown(e) {
 }
 
     function onDeviceReady() {
-    	
+    	window.plugins.uniqueDeviceID.get(success, fail);
+
     document.addEventListener("backbutton", onBackKeyDown, false);
     var element = document.getElementById('deviceProperties');
 
@@ -36,12 +37,15 @@ function onBackKeyDown(e) {
   }
     else
     {
-    	get_security_questions(device_uuid);
-    function get_security_questions(device_uuid)
+    	get_security_questions();
+    function get_security_questions()
     {
 	
 	
-	
+	var device_uuid = globalVariable;
+	alert("For Device Value Portal Security Questions Screen");
+	alert(device_uuid);
+	 
 	 $.ajaxSetup({
         xhrFields: {
             withCredentials: true
@@ -81,8 +85,8 @@ function onBackKeyDown(e) {
           },
           success: function (token) {   
  
-   	var device_uuid = device.uuid;
-	var d = document.getElementById("device_uuid");
+   	//var device_uuid = device.uuid;
+	//var d = document.getElementById("device_uuid");
 	var token =token;
 	var header = "X-CSRF-TOKEN";
     $(document).ajaxSend(function(e, xhr, options) {
@@ -93,7 +97,7 @@ function onBackKeyDown(e) {
               url: 'http://183.82.96.212:8080/m_service/m_resources/get_security_questions',
               type: "POST",
 	  		  //data: 'device_uuid='+'8dc6cf319947e729',
-      		  data: 'device_uuid='+device.uuid,
+      		  data: {device_uuid:device_uuid},
               dataType: "json",
               timeout:20000,
               crossDomain: true,
@@ -203,6 +207,12 @@ var networkState = navigator.connection.type;
     }
     else
     {
+	alert("Else..");
+	
+	var device_uuid = globalVariable;
+	alert("For Device Value portal answer");
+	alert(device_uuid);
+	
 	if(document.getElementById("security_answer").value == "")
 			{
 		$('#submit_button').prop('disabled', false);
@@ -351,17 +361,25 @@ var networkState = navigator.connection.type;
 			  });
 			  }
 			  });
-            
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-
       }
       }
       });
 });
 			
+			
+			
+	var globalVariable;			
+     function success(uuid)		
+{		
+    alert(uuid);		
+   		
+		globalVariable=uuid;
+		get_security_questions();
+};		
+function fail(uuid)		
+{		
+   		
+    alert("failure function reg");		
+};			
+
+		
