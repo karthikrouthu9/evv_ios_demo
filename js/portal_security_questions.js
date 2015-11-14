@@ -26,7 +26,7 @@ function onBackKeyDown(e) {
     var element = document.getElementById('deviceProperties');
 
          //var device_uuid = '8dc6cf319947e729';
-       	 var d = document.getElementById("device_uuid");
+       	 //var d = document.getElementById("device_uuid");
 		 //var device_uuid = device.uuid;
 
     var networkState = navigator.connection.type;
@@ -41,7 +41,7 @@ function onBackKeyDown(e) {
     function get_security_questions()
     {
 	
-	
+	alert("Get Security Questions");
 	var device_uuid = globalVariable;
 	alert("For Device Value Portal Security Questions Screen");
 	alert(device_uuid);
@@ -210,7 +210,7 @@ var networkState = navigator.connection.type;
 	alert("Else..");
 	
 	var device_uuid = globalVariable;
-	alert("For Device Value portal answer");
+	alert("For Device Value portal answer123");
 	alert(device_uuid);
 	
 	if(document.getElementById("security_answer").value == "")
@@ -292,7 +292,7 @@ var networkState = navigator.connection.type;
           success: function (token) {   
  
    	//var device_uuid = device.uuid;
-	var d = document.getElementById("device_uuid");
+	//var d = document.getElementById("device_uuid");
 	var token =token;
 	var header = "X-CSRF-TOKEN";
     $(document).ajaxSend(function(e, xhr, options) {
@@ -383,20 +383,4 @@ function fail(uuid)
 };			
 
 		
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
