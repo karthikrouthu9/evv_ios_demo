@@ -13,13 +13,8 @@ $(document).ready(function(){
 
     function onDeviceReady() {
 
-
-
-
-
-
-
-    document.addEventListener("backbutton", onBackKeyDown, false);
+		window.plugins.uniqueDeviceID.get(success, fail);
+		document.addEventListener("backbutton", onBackKeyDown, false);
         var element = document.getElementById('deviceProperties');
  
 
@@ -190,7 +185,7 @@ var networkState = navigator.connection.type;
     
     
 
-var d = document.getElementById("device_uuid");
+//var d = document.getElementById("device_uuid");
 
 var loginpin = /^\d{4}$/; 
 
@@ -202,7 +197,15 @@ var loginpin = /^\d{4}$/;
             withCredentials: true
         }
     });
-		 $.ajax({
+	
+	
+	var device_uuid = globalVariable;
+	alert("For Device Value login");
+	alert(device_uuid);
+	alert("Login Value");
+	alert(loginpin1);
+	
+	$.ajax({
           url:"http://183.82.96.212:8080/services/session/token",
           type:"get",
           dataType:"text",
@@ -212,7 +215,6 @@ var loginpin = /^\d{4}$/;
           	$('#button').html('Loading...');
 			$('#button').prop('disabled', false);
 			 $('#registrationcode1').prop('disabled', false);
-	
 			$('#button').html('Log-In');
 			 if(textStatus==="timeout") {
 					  bootbox.dialog({
@@ -248,7 +250,7 @@ var loginpin = /^\d{4}$/;
     
 	$.ajax({
 		 url:"http://183.82.96.212:8080/m_service/user/login",
-		 data:"username="+d.value+"&password="+loginpin1,
+		 data:{username:device_uuid, password:loginpin1},
 		 type:"POST",
 		 dataType:"json",	
 		 success:function(data)
@@ -505,4 +507,23 @@ function calcTime(city, offset) {
     //return "The local time in " + city + " is " + nd.toLocaleString();
      return nd.toLocaleString();
 }
+
+
+var globalVariable;			
+     function success(uuid)		
+{		
+    alert(uuid);		
+   		
+		globalVariable=uuid;
+		is_device_registered();
+};		
+function fail(uuid)		
+{		
+   		
+    alert("failure function reg");		
+};			
+
+
+
+
 
