@@ -11,7 +11,7 @@
 		}
 		 
 	
-	 function resolution_handling() 
+/*	 function resolution_handling() 
 	 {
 	     //first way to implement
 	     browser_width = $(window).width();
@@ -19,7 +19,7 @@
 	     //alert('browser_width'+browser_width);
 	     //alert('browser_height'+browser_height);
 	 }
-
+*/
 		function onDeviceReady() {
 			alert("Device Ready");
 			window.plugins.uniqueDeviceID.get(success, fail);
@@ -90,9 +90,9 @@ alert("Before Ajax");
 	
 	alert("After Success Token");
 		
-    		is_device_registered(device_uuid);
+    		is_device_registered();
    
- function is_device_registered(device_uuid)
+ function is_device_registered()
 {
 	var device_uuid = globalVariable;
 	alert("For Device Value");
@@ -185,7 +185,7 @@ alert("Before Ajax");
     alert(uuid);		
    		
 		globalVariable=uuid;
-		is_device_registered(device_uuid)
+		is_device_registered();
 };		
 function fail(uuid)		
 {		
