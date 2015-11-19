@@ -17,7 +17,6 @@
  specific language governing permissions and limitations
  under the License.
 -->
-<widget id="com.example.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         id        = "web.application.attendancesystem"
         version   = "2.0.0"
@@ -51,7 +50,6 @@
       <preference name="ios-orientation-iphone" value="portrait" />
 <preference name="ios-orientation-ipad" value="portrait and landscape" /> 
       <platform name="android">
-	  <platform name="ios">
       	<gap:platform name="ios" />
       	<gap:platform name="android" />
       	<gap:platform name="winphone" />
