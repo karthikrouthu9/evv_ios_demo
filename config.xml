@@ -68,7 +68,7 @@
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="org.apache.cordova.dialogs" />
 <gap:plugin name="org.apache.cordova.splashscreen" />
-<gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" />
+<gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" version="1.2.0"/>
 
 
 
