@@ -17,6 +17,7 @@
  specific language governing permissions and limitations
  under the License.
 -->
+<widget id="com.example.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         id        = "web.application.attendancesystem"
         version   = "2.0.0"
