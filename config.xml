@@ -21,7 +21,7 @@
         id        = "web.application.attendancesystem"
         version   = "2.0.0"
         xmlns:gap = "http://phonegap.com/ns/1.0">
-    <name>evv_iOS</name>
+    <name>evv_iOS_Demo</name>
 
     <description>
        This is a ios Phonegap Application
