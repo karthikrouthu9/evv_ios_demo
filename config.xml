@@ -21,7 +21,7 @@
         id        = "web.application.attendancesystem"
         version   = "2.0.0"
         xmlns:gap = "http://phonegap.com/ns/1.0">
-    <name>evv_iOS_Demo</name>
+    <name>Evv_ios_demo</name>
 
     <description>
        This is a ios Phonegap Application
@@ -59,7 +59,7 @@
     <splash src="res/screen/android/homecare_logo.png" density="port-xhdpi"/>
   </platform>
   <gap:plugin name="org.apache.cordova.core.camera" />
-  <gap:plugin name="cordova.plugins.diagnostic" source="plugins.cordova.io" />
+ 
 <gap:plugin name="org.apache.cordova.core.geolocation" />
 <gap:plugin name="org.apache.cordova.core.dialogs" />
 <gap:plugin name="org.apache.cordova.device" />
@@ -68,7 +68,8 @@
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="org.apache.cordova.dialogs" />
 <gap:plugin name="org.apache.cordova.splashscreen" />
-<gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" source="plugins.cordova.io" />
+<gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" />
+
 
 
 
