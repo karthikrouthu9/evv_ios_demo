@@ -45,15 +45,14 @@
       <preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
       <preference name="disallowOverscroll" value="true" />
-   	  <preference name="SplashScreen" value="screen" />
-      <preference name="SplashScreenDelay" value="10000" />
+   	
       <preference name="ios-orientation-iphone" value="portrait" />
 <preference name="ios-orientation-ipad" value="portrait and landscape" /> 
       <platform name="android">
 	  <platform name="ios">
       	<gap:platform name="ios" />
       	<gap:platform name="android" />
-      	<gap:platform name="winphone" />
+     
     <splash src="res/screen/android/homecare_logo.png" density="port-hdpi"/>
     <splash src="res/screen/android/homecare_logo.png" density="port-ldpi"/>
     <splash src="res/screen/android/homecare_logo.png" density="port-mdpi"/>
